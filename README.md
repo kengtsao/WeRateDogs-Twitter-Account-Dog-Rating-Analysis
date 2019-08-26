@@ -6,30 +6,6 @@ We gathered three separate tables at first.
 2. `img_df` includes the dog type prediction results and probabilities of each dog picture in the Tweet.
 3. `tweet_df` includes Tweet info queried from the Tweeter API includes retweet numbers, like numbers and length of the Tweet
 
-## Wrangling
-In the wrangling process, I listed some issues in these dataframes and fixed them.
-#### Quality
-
-`archive` table
-    1. Timestamp is a datetime not an object
-    2. Missing "in_reply_to_status_id", "in_reply_to_user_id", "retweeted_status_id",   "retweeted_status_user_id", "retweeted_status_timestamp" and "expanded_urls". (can't fix yet)
-    3. Tweet_id 835246439529840640 rating_denominator = 0 and rating_numerator = 960. I would assume it's a typo of 96/100 
-    4. Since we only want original ratings (no retweets) that have images, so delete those tweets with retweet_id
-    5. Some animal names not capitalized
-    6. After deleting rows with retweet_id, we can delete "retweeted_status_id", "retweeted_status_user_id" and "retweeted_status_timestamp" since they are useless for the analysis
-    7. Some dogs have more than one dog "stage". Ex: tweet_id: 817777686764523521 (can not fix)
-`img_df` table
-    1. Delete those rows with "p1_dog" == False, since our analysis only want to focus on dogs rating
-    
-    
-    
-#### Tidiness
-`archive` table
-    1. One variable, dog stage, in four columns (doggo, floofer, pupper, puppo)
-    2. Overall_rating can be calculated with rating_numerator/rating_denominator, combining two columns into one
-    3. Animal breed "p1" from img table can be added to archive table since it's also a part of info of the tweet
-    4. tweet_df table can be merged with archive table with tweet_id
-
 ## Insights 
 
 1. Dog rating in the WeRateDogs account has no relationship with the popularity, which can be defined with number of retweet and numebr of like, of the Tweet. The correlation coefficient between rating and number of retweet is only 0.015 and the correlation coefficient between rating and number of like is only 0.014. Even if the dog photo is rated with high score by WeRateDogs, the tweet might not be more popular than other dogs with low rating. 
